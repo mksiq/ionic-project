@@ -19,6 +19,8 @@ public class Category implements Serializable {
 	public Category() {
 	}
 	
+
+	
 	
 	public Category(Integer id, String name) {
 		super();

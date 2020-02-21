@@ -7,12 +7,17 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import com.mck.domain.Address;
 import com.mck.domain.Category;
 import com.mck.domain.City;
+import com.mck.domain.Client;
 import com.mck.domain.Product;
 import com.mck.domain.Province;
+import com.mck.domain.enums.ClientType;
+import com.mck.repositories.AddressRepository;
 import com.mck.repositories.CategoryRepository;
 import com.mck.repositories.CityRepository;
+import com.mck.repositories.ClientRepository;
 import com.mck.repositories.ProductRepository;
 import com.mck.repositories.ProvinceRepository;
 
@@ -26,6 +31,10 @@ public class MsappApplication implements CommandLineRunner {
 	private ProvinceRepository provRepository;
 	@Autowired
 	private CityRepository cityRepository;
+	@Autowired
+	private ClientRepository clientRepository;
+	@Autowired
+	private AddressRepository addrRepository;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(MsappApplication.class, args);
@@ -68,6 +77,18 @@ public class MsappApplication implements CommandLineRunner {
 		
 		provRepository.saveAll(Arrays.asList(prov1,prov2));
 		cityRepository.saveAll(Arrays.asList(c1,c2,c3));
+		
+		Client cli1 = new Client(null, "Mary", "mary@gmail.com", "987654321", ClientType.PERSON);
+		cli1.getPhones().addAll(Arrays.asList("6471234567", "6472135656"));
+		
+		Address a1 = new Address(null, "123", "Keale st", "0", "M1M M1M", cli1, c1);
+		Address a2 = new Address(null, "234", "Finch Ave", "0", "M2M M1M", cli1, c1);
+		
+		cli1.getAdress().addAll(Arrays.asList(a1,a2));
+		
+		clientRepository.saveAll(Arrays.asList(cli1));
+		
+		addrRepository.saveAll(Arrays.asList(a1, a2));
 	}
 
 }

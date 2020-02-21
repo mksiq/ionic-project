@@ -1,39 +1,37 @@
 package com.mck.domain;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
-public class Category implements Serializable {
+public class City implements Serializable {
+
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
 	private String name;
-	@JsonManagedReference
-	@ManyToMany(mappedBy="categories")
-	private List<Product> products = new ArrayList<Product>();
 	
-	
-	public Category() {
-	}
-	
+	@ManyToOne
+	@JoinColumn(name="province_id")
+	private Province province;
 
-	
-	
-	public Category(Integer id, String name) {
+	public City() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public City(Integer id, String name, Province province) {
 		super();
 		this.id = id;
 		this.name = name;
+		this.province = province;
 	}
 
 	public Integer getId() {
@@ -51,13 +49,13 @@ public class Category implements Serializable {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
-	public List<Product> getProducts() {
-		return products;
+
+	public Province getProvince() {
+		return province;
 	}
 
-	public void setProducts(List<Product> products) {
-		this.products = products;
+	public void setProvince(Province province) {
+		this.province = province;
 	}
 
 	@Override
@@ -76,7 +74,7 @@ public class Category implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Category other = (Category) obj;
+		City other = (City) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -84,12 +82,6 @@ public class Category implements Serializable {
 			return false;
 		return true;
 	}
-
-
-
-
-
-	
 	
 	
 }

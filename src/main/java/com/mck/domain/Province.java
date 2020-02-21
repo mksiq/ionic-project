@@ -8,29 +8,26 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import javax.persistence.OneToMany;
 
 @Entity
-public class Category implements Serializable {
+public class Province implements Serializable {
+
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
 	private String name;
-	@JsonManagedReference
-	@ManyToMany(mappedBy="categories")
-	private List<Product> products = new ArrayList<Product>();
 	
-	
-	public Category() {
-	}
-	
+	@OneToMany(mappedBy="province")
+	private List<City> cities = new ArrayList<>();
 
-	
-	
-	public Category(Integer id, String name) {
+	public Province() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public Province(Integer id, String name) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -51,13 +48,13 @@ public class Category implements Serializable {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
-	public List<Product> getProducts() {
-		return products;
+
+	public List<City> getCities() {
+		return cities;
 	}
 
-	public void setProducts(List<Product> products) {
-		this.products = products;
+	public void setCities(List<City> cities) {
+		this.cities = cities;
 	}
 
 	@Override
@@ -76,7 +73,7 @@ public class Category implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Category other = (Category) obj;
+		Province other = (Province) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -85,11 +82,5 @@ public class Category implements Serializable {
 		return true;
 	}
 
-
-
-
-
-	
-	
 	
 }

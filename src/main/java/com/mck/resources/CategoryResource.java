@@ -1,7 +1,6 @@
 package com.mck.resources;
 
-import java.util.ArrayList;
-import java.util.List;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -21,10 +20,7 @@ public class CategoryResource {
 	private CategoryServices service;
 	@RequestMapping(value="/{id}", method=RequestMethod.GET)
 	public ResponseEntity<?> find(@PathVariable Integer id) {
-		Category obj = service.find(id);
-		
+		Category obj = service.find(id);	
 		return ResponseEntity.ok().body(obj);
-		
-	
 	}
 }

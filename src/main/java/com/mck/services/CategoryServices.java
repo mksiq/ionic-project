@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.mck.domain.Category;
 import com.mck.repositories.CategoryRepository;
+import com.mck.services.exceptions.ObjectNotFoundException;
 
 @Service
 public class CategoryServices {
@@ -16,6 +17,14 @@ public class CategoryServices {
 	
 	public Category find(Integer id) {
 		Optional<Category> obj = repo.findById(id);
-		return obj.orElse(null);	
+		return obj.orElseThrow(() -> new ObjectNotFoundException(
+				"Object not found. Id : " + id + ", Type: " + Category.class.getName()));
 	}
+	
+	
+	// return obj.orElseThrow(() -> new ObjectNotFoundException(
+	//					"Object not found. Id : " + id + ", Type: " + Category.class.getName()));
+	
+
+	
 }

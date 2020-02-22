@@ -1,5 +1,6 @@
 package com.mck;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,13 +12,20 @@ import com.mck.domain.Address;
 import com.mck.domain.Category;
 import com.mck.domain.City;
 import com.mck.domain.Client;
+import com.mck.domain.Invoice;
+import com.mck.domain.Payment;
+import com.mck.domain.PaymentCard;
+import com.mck.domain.PaymentSlip;
 import com.mck.domain.Product;
 import com.mck.domain.Province;
 import com.mck.domain.enums.ClientType;
+import com.mck.domain.enums.PaymentStatus;
 import com.mck.repositories.AddressRepository;
 import com.mck.repositories.CategoryRepository;
 import com.mck.repositories.CityRepository;
 import com.mck.repositories.ClientRepository;
+import com.mck.repositories.InvoiceRepository;
+import com.mck.repositories.PaymentRepository;
 import com.mck.repositories.ProductRepository;
 import com.mck.repositories.ProvinceRepository;
 
@@ -35,6 +43,10 @@ public class MsappApplication implements CommandLineRunner {
 	private ClientRepository clientRepository;
 	@Autowired
 	private AddressRepository addrRepository;
+	@Autowired
+	private PaymentRepository paymentRepository;
+	@Autowired
+	private InvoiceRepository invoiceRepository;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(MsappApplication.class, args);
@@ -89,6 +101,21 @@ public class MsappApplication implements CommandLineRunner {
 		clientRepository.saveAll(Arrays.asList(cli1));
 		
 		addrRepository.saveAll(Arrays.asList(a1, a2));
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+		Invoice inv1 = new Invoice(null, sdf.parse("22/02/2020 3:04"), cli1, a1);
+		Invoice inv2 = new Invoice(null, sdf.parse("15/01/2020 2:01"), cli1, a2);
+		
+		Payment pay1 = new PaymentCard(null, PaymentStatus.PAID, inv1, "Visa");
+		inv1.setPayment(pay1);
+		Payment pay2 = new PaymentSlip(null, PaymentStatus.PENDING, inv2, sdf.parse("23/03/2020 00:00"),  null);
+		inv2.setPayment(pay2);
+		
+		cli1.getInvoices().addAll(Arrays.asList(inv1, inv2));
+		
+		invoiceRepository.saveAll(Arrays.asList(inv1, inv2));
+		paymentRepository.saveAll(Arrays.asList(pay1, pay2));
+		
 	}
 
 }

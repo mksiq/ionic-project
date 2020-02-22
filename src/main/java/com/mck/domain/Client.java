@@ -14,10 +14,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.mck.domain.enums.ClientType;
 @Entity
 public class Client implements Serializable {
-
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -26,12 +26,21 @@ public class Client implements Serializable {
 	private String email;
 	private String sinOrBn;
 	private Integer type;
+	
+	@JsonManagedReference
 	@OneToMany(mappedBy="client")
 	private List<Address> adress = new ArrayList<>();
 	
 	@ElementCollection
 	@CollectionTable(name="PHONE")
 	private Set<String>  phones = new HashSet<>();
+	@OneToMany(mappedBy="client")
+	private List<Invoice> invoices = new ArrayList<>();
+	
+	public Client() {
+		super();
+	
+	}
 
 	public Client(Integer id, String name, String email, String sinOrBn, ClientType type) {
 		super();
@@ -97,6 +106,15 @@ public class Client implements Serializable {
 	public void setPhones(Set<String> phones) {
 		this.phones = phones;
 	}
+	
+	public List<Invoice> getInvoices() {
+		return invoices;
+	}
+
+	public void setInvoices(List<Invoice> invoices) {
+		this.invoices = invoices;
+	}
+	
 
 	@Override
 	public int hashCode() {
@@ -122,7 +140,8 @@ public class Client implements Serializable {
 			return false;
 		return true;
 	}
-	
+
+
 	
 	
 }

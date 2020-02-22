@@ -5,20 +5,20 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.mck.domain.Category;
-import com.mck.repositories.CategoryRepository;
+import com.mck.domain.Client;
+import com.mck.repositories.ClientRepository;
 import com.mck.services.exceptions.ObjectNotFoundException;
 
 @Service
-public class CategoryServices {
+public class ClientServices {
 
 	@Autowired
-	private CategoryRepository repo;
+	private ClientRepository repo;
 	
-	public Category find(Integer id) {
-		Optional<Category> obj = repo.findById(id);
+	public Client find(Integer id) {
+		Optional<Client> obj = repo.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException(
-				"Object not found. Id : " + id + ", Type: " + Category.class.getName()));
+				"Object not found. Id : " + id + ", Type: " + Client.class.getName()));
 	}
 	
 	

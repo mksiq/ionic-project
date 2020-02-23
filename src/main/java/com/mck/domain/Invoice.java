@@ -2,6 +2,8 @@ package com.mck.domain;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -10,11 +12,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 @Entity
 public class Invoice implements Serializable {
-
 	private static final long serialVersionUID = 1L;
 	
 	@Id
@@ -24,13 +26,18 @@ public class Invoice implements Serializable {
 	
 	@OneToOne(cascade=CascadeType.ALL, mappedBy="invoice")
 	private Payment payment;
+	
 	@ManyToOne
-	@JoinColumn(name="cliente_id")
+	@JoinColumn(name="client_id")
 	private Client client;
 	
 	@ManyToOne
 	@JoinColumn(name="shipping_address_id")
 	private Address shippingAddress;
+	
+	@OneToMany(mappedBy="id.invoice")
+	private Set<ItemInvoice> items = new HashSet<ItemInvoice>();
+	
 
 	public Invoice() {
 		super();
@@ -108,6 +115,14 @@ public class Invoice implements Serializable {
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
+	}
+
+	public Set<ItemInvoice> getItems() {
+		return items;
+	}
+
+	public void setItems(Set<ItemInvoice> items) {
+		this.items = items;
 	}
 	
 	

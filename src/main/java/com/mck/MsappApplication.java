@@ -13,6 +13,7 @@ import com.mck.domain.Category;
 import com.mck.domain.City;
 import com.mck.domain.Client;
 import com.mck.domain.Invoice;
+import com.mck.domain.ItemInvoice;
 import com.mck.domain.Payment;
 import com.mck.domain.PaymentCard;
 import com.mck.domain.PaymentSlip;
@@ -25,6 +26,7 @@ import com.mck.repositories.CategoryRepository;
 import com.mck.repositories.CityRepository;
 import com.mck.repositories.ClientRepository;
 import com.mck.repositories.InvoiceRepository;
+import com.mck.repositories.ItemInvoiceRepository;
 import com.mck.repositories.PaymentRepository;
 import com.mck.repositories.ProductRepository;
 import com.mck.repositories.ProvinceRepository;
@@ -47,6 +49,8 @@ public class MsappApplication implements CommandLineRunner {
 	private PaymentRepository paymentRepository;
 	@Autowired
 	private InvoiceRepository invoiceRepository;
+	@Autowired
+	private ItemInvoiceRepository itemInvoiceRepository;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(MsappApplication.class, args);
@@ -116,6 +120,18 @@ public class MsappApplication implements CommandLineRunner {
 		invoiceRepository.saveAll(Arrays.asList(inv1, inv2));
 		paymentRepository.saveAll(Arrays.asList(pay1, pay2));
 		
+		ItemInvoice ii1 = new ItemInvoice(inv1, p1, 0.0, 1, 2000.0);
+		ItemInvoice ii2 = new ItemInvoice(inv1, p3, 0.0, 2, 80.0);
+		ItemInvoice ii3 = new ItemInvoice(inv2, p2, 100.00, 1, 800.00);
+		
+		inv1.getItems().addAll(Arrays.asList(ii1, ii2));
+		inv2.getItems().addAll(Arrays.asList(ii3));
+		
+		p1.getItems().addAll(Arrays.asList(ii1));
+		p2.getItems().addAll(Arrays.asList(ii3));
+		p3.getItems().addAll(Arrays.asList(ii2));
+		
+		itemInvoiceRepository.saveAll(Arrays.asList(ii1,ii2,ii3));
 	}
 
 }

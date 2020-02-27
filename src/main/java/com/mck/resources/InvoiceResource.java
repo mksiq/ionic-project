@@ -9,18 +9,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.mck.domain.Client;
-import com.mck.services.ClientServices;
+import com.mck.domain.Invoice;
+import com.mck.services.InvoiceServices;
 
 
 @RestController
-@RequestMapping(value="/clients")
-public class ClientResource {
+@RequestMapping(value="/invoices")
+public class InvoiceResource {
 	@Autowired
-	private ClientServices service;
+	private InvoiceServices service;
 	@RequestMapping(value="/{id}", method=RequestMethod.GET)
-	public ResponseEntity<Client> find(@PathVariable Integer id) {
-		Client obj = service.find(id);	
+	public ResponseEntity<Invoice> find(@PathVariable Integer id) {
+		Invoice obj = service.find(id);	
 		return ResponseEntity.ok().body(obj);
 	}
 }

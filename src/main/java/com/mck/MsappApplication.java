@@ -62,6 +62,10 @@ public class MsappApplication implements CommandLineRunner {
 		Category cat1 = new Category(null, "IT");
 		Category cat2 = new Category(null, "Office");
 		Category cat3 = new Category(null, "HR");
+		Category cat4 = new Category(null, "Bed and Bath");
+		Category cat5 = new Category(null, "Eletronics");
+		Category cat6 = new Category(null, "Gardening");
+		Category cat7 = new Category(null, "Pharmacy");
 		
 		Product p1 = new Product(null, "Computer", 1495.00);
 		Product p2 = new Product(null, "Printer", 400.00);
@@ -77,7 +81,7 @@ public class MsappApplication implements CommandLineRunner {
 		
 
 		
-		catRepository.saveAll(Arrays.asList(cat1, cat2, cat3));
+		catRepository.saveAll(Arrays.asList(cat1, cat2, cat3, cat4, cat5, cat6, cat7));
 		prodRepository.saveAll(Arrays.asList(p1,p2,p3));
 		
 		
@@ -132,6 +136,9 @@ public class MsappApplication implements CommandLineRunner {
 		p3.getItems().addAll(Arrays.asList(ii2));
 		
 		itemInvoiceRepository.saveAll(Arrays.asList(ii1,ii2,ii3));
+		
+		
+		// import javax.validation.constraints.noempty;
 	}
 
 }

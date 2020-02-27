@@ -19,10 +19,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+
 import com.mck.domain.Client;
-import com.mck.domain.Client;
+
+
 import com.mck.dto.ClientDTO;
-import com.mck.dto.ClientDTO;
+import com.mck.dto.ClientNewDTO;
+
 import com.mck.services.ClientServices;
 
 
@@ -49,7 +52,7 @@ public class ClientResource {
 	
 	
 	@RequestMapping(method=RequestMethod.POST)
-	public ResponseEntity<Void> insert(@Valid @RequestBody ClientDTO objDto){
+	public ResponseEntity<Void> insert(@Valid @RequestBody ClientNewDTO objDto){
 		Client obj = service.fromDTO(objDto);
 		obj = service.insert(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().

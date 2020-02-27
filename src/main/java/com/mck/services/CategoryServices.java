@@ -11,6 +11,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.mck.domain.Category;
+
 import com.mck.dto.CategoryDTO;
 import com.mck.repositories.CategoryRepository;
 import com.mck.services.exceptions.DataIntegrityException;
@@ -31,14 +32,19 @@ public class CategoryServices {
 	public Category insert(Category obj) {
 		obj.setId(null);
 		return repo.save(obj);
-		
-		
 	}
 
 	public Category update(Category obj) {
 		//check if there is this id
-		find(obj.getId());
-		return repo.save(obj);
+		//find(obj.getId());
+		Category newObj = find(obj.getId());
+		updateData(newObj, obj);
+		return repo.save(newObj);
+	}
+
+	
+	private void updateData(Category newObj, Category obj) {
+		newObj.setName(obj.getName());
 	}
 
 	

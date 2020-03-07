@@ -65,16 +65,29 @@ public class ItemInvoice implements Serializable{
 		this.price = price;
 	}
 	
+	public double getSubTotal() {
+		
+		
+		return (price - discount) * quantity;
+	}
+	
+	
+	
 	@JsonIgnore
 	public Invoice getInvoice() {
 		return id.getInvoice();
 	}
 	
-	
+	public void setInvoice(Invoice invoice) {
+		id.setInvoice(invoice);
+	}
 	public Product getProduct() {
 		return id.getProduct();
 	}
 
+	public void setProduct(Product product) {
+		id.setProduct(product);
+	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;

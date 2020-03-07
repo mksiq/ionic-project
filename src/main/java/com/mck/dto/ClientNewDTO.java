@@ -2,20 +2,41 @@ package com.mck.dto;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+
+import org.hibernate.validator.constraints.Length;
+
+import com.mck.services.validation.ClientInsert;
+
+
+@ClientInsert
 public class ClientNewDTO implements Serializable{
 
 
 	private static final long serialVersionUID = 1L;
+	@NotEmpty(message="Must be filled")
+	@Length(min=5,max=120,message="Must have between 5 and 120 characters")
 	private String name;
+	@NotEmpty(message="Must be filled")
+	@Email(message="Invalid email")
 	private String email;
+	
+	@NotEmpty(message="Must be filled")
 	private String sinOrBn;
 	private Integer type;
 	
 	private String number;
+	
+	
+	@NotEmpty(message="Must be filled")
 	private String streetName;
 	private String unitNumber;
+	
+	@NotEmpty(message="Must be filled")
 	private String postalCode;
 	
+	@NotEmpty(message="Must be filled")
 	private String phone1;
 	private String phone2;
 	private String phone3;

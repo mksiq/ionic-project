@@ -14,6 +14,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import org.hibernate.annotations.CascadeType;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.mck.domain.enums.ClientType;
 @Entity
@@ -23,12 +25,16 @@ public class Client implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
 	private String name;
+	
+//	@Column(unique=true) for unique email restricted by db
+	
+	
 	private String email;
 	private String sinOrBn;
 	private Integer type;
 	
 
-	@OneToMany(mappedBy="client")
+	@OneToMany(mappedBy="client", cascade=javax.persistence.CascadeType.ALL)
 	private List<Address> adress = new ArrayList<>();
 	
 	@ElementCollection

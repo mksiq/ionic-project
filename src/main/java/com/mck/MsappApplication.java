@@ -70,19 +70,43 @@ public class MsappApplication implements CommandLineRunner {
 		Product p1 = new Product(null, "Computer", 1495.00);
 		Product p2 = new Product(null, "Printer", 400.00);
 		Product p3 = new Product(null, "Mouse", 40.00);
-		
+		Product p4 = new Product(null, "Table", 1495.00);
+		Product p5 = new Product(null, "Pillow", 12.00);
+		Product p6 = new Product(null, "Matress", 140.00);
+		Product p7 = new Product(null, "TV OLED", 1495.00);
+		Product p8 = new Product(null, "Shears", 16.00);
+		Product p9 = new Product(null, "Tulip", 11.00);
+		Product p10 = new Product(null, "Shampoo", 14.95);
+
 
 		cat1.getProducts().addAll(Arrays.asList(p1, p2, p3));
-		cat2.getProducts().addAll(Arrays.asList(p2));
+		cat2.getProducts().addAll(Arrays.asList(p2, p4));
+		cat3.getProducts().addAll(Arrays.asList(p5));
+		cat4.getProducts().addAll(Arrays.asList(p5,p6));
+		cat5.getProducts().addAll(Arrays.asList(p7, p1));
+		cat6.getProducts().addAll(Arrays.asList(p8, p9));
+		cat7.getProducts().addAll(Arrays.asList(p10));
 		
-		p1.getCategories().addAll(Arrays.asList(cat1));
+		
+		
+		
+		
+		
+		p1.getCategories().addAll(Arrays.asList(cat1, cat5));
 		p2.getCategories().addAll(Arrays.asList(cat1, cat2));
 		p3.getCategories().addAll(Arrays.asList(cat1));
+		p4.getCategories().addAll(Arrays.asList(cat2));
+		p5.getCategories().addAll(Arrays.asList(cat3, cat4));
+		p6.getCategories().addAll(Arrays.asList(cat4));
+		p7.getCategories().addAll(Arrays.asList(cat5));
+		p8.getCategories().addAll(Arrays.asList(cat6));
+		p9.getCategories().addAll(Arrays.asList(cat6));
+		p10.getCategories().addAll(Arrays.asList(cat7));
 		
 
 		
 		catRepository.saveAll(Arrays.asList(cat1, cat2, cat3, cat4, cat5, cat6, cat7));
-		prodRepository.saveAll(Arrays.asList(p1,p2,p3));
+		prodRepository.saveAll(Arrays.asList(p1,p2,p3,p4,p5,p6,p7,p8,p9,p10));
 		
 		
 		Province prov1 = new Province(null, "Ontario");

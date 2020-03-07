@@ -49,6 +49,14 @@ public class Invoice implements Serializable {
 	public Invoice() {
 		super();
 	}
+	
+	public double getTotalValue() {
+		double sum = 0.0;
+		for(ItemInvoice item : items) {
+			sum += item.getSubTotal();
+		}
+		return sum;
+	}
 
 	public Invoice(Integer id, Date requestDate, Client client, Address shippingAddress) {
 		super();

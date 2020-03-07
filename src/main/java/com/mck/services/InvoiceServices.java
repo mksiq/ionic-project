@@ -42,6 +42,7 @@ public class InvoiceServices {
 		return obj.orElseThrow(() -> new ObjectNotFoundException(
 				"Object not found. Id : " + id + ", Type: " + Invoice.class.getName()));
 	}
+	
 	@Transactional
 	public Invoice insert(Invoice obj) {
 		obj.setId(null);

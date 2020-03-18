@@ -40,6 +40,9 @@ public class InvoiceServices {
 	@Autowired
 	private ClientServices clientServices;
 	
+	@Autowired
+	private EmailService emailService;
+	
 	public Invoice find(Integer id) {
 		Optional<Invoice> obj = repo.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException(
@@ -67,7 +70,7 @@ public class InvoiceServices {
 			item.setInvoice(obj);
 		}
 		itemInvoiceRepository.saveAll(obj.getItems());
-
+		emailService.sendOrderConfirmationEmail(obj);
 		return obj;
 	}
 	

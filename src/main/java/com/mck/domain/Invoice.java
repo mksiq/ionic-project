@@ -154,7 +154,7 @@ public class Invoice implements Serializable {
 		builder.append(sdf.format(getRequestDate()));
 		builder.append(", customer: ");
 		builder.append(getClient().getName());
-		builder.append(", payment status");
+		builder.append(", payment status: ");
 		builder.append(getPayment().getPaymentStatus());
 		builder.append("\nDetails:\n");
 		for (ItemInvoice ii : getItems()) {

@@ -1,8 +1,11 @@
 package com.mck.domain;
 
 import java.io.Serializable;
+import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -138,6 +141,29 @@ public class Invoice implements Serializable {
 
 	public void setItems(Set<ItemInvoice> items) {
 		this.items = items;
+	}
+
+	@Override
+	public String toString() {
+		NumberFormat nf = NumberFormat.getCurrencyInstance(Locale.CANADA);
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss");
+		StringBuilder builder = new StringBuilder();
+		builder.append("Invoice number: ");
+		builder.append(getId());
+		builder.append(", date: ");
+		builder.append(sdf.format(getRequestDate()));
+		builder.append(", customer: ");
+		builder.append(getClient().getName());
+		builder.append(", payment status");
+		builder.append(getPayment().getPaymentStatus());
+		builder.append("\nDetails:\n");
+		for (ItemInvoice ii : getItems()) {
+			builder.append(ii.toString());
+		}
+		builder.append("Total Price: ");
+		builder.append(nf.format(getTotalValue()));
+		
+		return builder.toString();
 	}
 	
 	

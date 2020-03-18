@@ -1,6 +1,8 @@
 package com.mck.domain;
 
 import java.io.Serializable;
+import java.text.NumberFormat;
+import java.util.Locale;
 
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
@@ -111,6 +113,22 @@ public class ItemInvoice implements Serializable{
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
+	}
+
+	@Override
+	public String toString() {
+		NumberFormat nf = NumberFormat.getCurrencyInstance(Locale.CANADA);
+		
+		StringBuilder builder = new StringBuilder();
+		builder.append(getProduct().getName());
+		builder.append(", qty: ");
+		builder.append(getQuantity());
+		builder.append(", pricer per unit: ");
+		builder.append(nf.format(getPrice()));
+		builder.append(", sub total: ");
+		builder.append(nf.format(getSubTotal()));
+		builder.append("\n");
+		return builder.toString();
 	}
 	
 	

@@ -25,6 +25,8 @@ public class ClientNewDTO implements Serializable{
 	@NotEmpty(message="Must be filled")
 	private String sinOrBn;
 	private Integer type;
+	@NotEmpty(message="Must be filled")
+	private String password;
 	
 	private String number;
 	
@@ -57,6 +59,14 @@ public class ClientNewDTO implements Serializable{
 
 	public String getEmail() {
 		return email;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	public void setEmail(String email) {

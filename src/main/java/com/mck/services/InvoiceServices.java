@@ -3,7 +3,6 @@ package com.mck.services;
 import java.util.Date;
 import java.util.Optional;
 
-import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,7 +15,7 @@ import com.mck.domain.enums.PaymentStatus;
 import com.mck.repositories.InvoiceRepository;
 import com.mck.repositories.ItemInvoiceRepository;
 import com.mck.repositories.PaymentRepository;
-import com.mck.repositories.ProductRepository;
+
 import com.mck.services.exceptions.ObjectNotFoundException;
 
 @Service
@@ -70,7 +69,7 @@ public class InvoiceServices {
 			item.setInvoice(obj);
 		}
 		itemInvoiceRepository.saveAll(obj.getItems());
-		emailService.sendOrderConfirmationEmail(obj);
+		emailService.sendOrderConfirmationHtmlEmail(obj);
 		return obj;
 	}
 	

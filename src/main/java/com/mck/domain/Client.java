@@ -5,19 +5,23 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
+import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
+import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
-import org.hibernate.annotations.CascadeType;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.mck.domain.enums.ClientType;
+import com.mck.domain.enums.UserProfile;
 @Entity
 public class Client implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -28,7 +32,7 @@ public class Client implements Serializable {
 	
 //	@Column(unique=true) for unique email restricted by db
 	
-	
+	@Column(unique=true)
 	private String email;
 	private String sinOrBn;
 	private Integer type;
@@ -37,19 +41,24 @@ public class Client implements Serializable {
 	private String password;
 	
 
-	@OneToMany(mappedBy="client", cascade=javax.persistence.CascadeType.ALL)
+	@OneToMany(mappedBy="client", cascade=CascadeType.ALL)
 	private List<Address> adress = new ArrayList<>();
 	
 	@ElementCollection
 	@CollectionTable(name="PHONE")
 	private Set<String>  phones = new HashSet<>();
 	
+	@ElementCollection(fetch=FetchType.EAGER)
+	@CollectionTable(name="USER_PROFILE")
+	private Set<Integer> userProfile = new HashSet<>();
+	
+	
 	@JsonIgnore
 	@OneToMany(mappedBy="client")
 	private List<Invoice> invoices = new ArrayList<>();
 	
 	public Client() {
-		super();
+		addProfile(UserProfile.CLIENT);
 	
 	}
 
@@ -61,6 +70,7 @@ public class Client implements Serializable {
 		this.sinOrBn = sinOrBn;
 		this.type = (type == null )? null : type.getCod();
 		this.password = password;
+		addProfile(UserProfile.CLIENT);
 	}
 
 	public String getPassword() {
@@ -135,6 +145,16 @@ public class Client implements Serializable {
 		this.invoices = invoices;
 	}
 	
+	
+
+	public Set<UserProfile> getProfiles() {
+		
+		return userProfile.stream().map(x -> UserProfile.toEnum(x)).collect(Collectors.toSet());
+	}
+
+	public void addProfile(UserProfile profile) {
+		userProfile.add(profile.getCod());
+	}
 
 	@Override
 	public int hashCode() {

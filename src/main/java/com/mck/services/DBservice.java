@@ -21,6 +21,7 @@ import com.mck.domain.Product;
 import com.mck.domain.Province;
 import com.mck.domain.enums.ClientType;
 import com.mck.domain.enums.PaymentStatus;
+import com.mck.domain.enums.UserProfile;
 import com.mck.repositories.AddressRepository;
 import com.mck.repositories.CategoryRepository;
 import com.mck.repositories.CityRepository;
@@ -124,12 +125,18 @@ public class DBservice {
 		Client cli1 = new Client(null, "Mary", "mcksiq@gmail.com", "987654321", ClientType.PERSON, bp.encode("123"));
 		cli1.getPhones().addAll(Arrays.asList("6471234567", "6472135656"));
 		
-		Address a1 = new Address(null, "123", "Keale st", "0", "M1M M1M", cli1, c1);
+		Client cli2 = new Client(null, "Maickel", "maickelsiqueira@gmail.com", "18238123", ClientType.PERSON, bp.encode("123"));
+		cli2.addProfile(UserProfile.ADMIN);
+		cli2.getPhones().addAll(Arrays.asList("189329381", "81234923"));
+		
+		
+		Address a1 = new Address(null, "123", "Keele st", "0", "M1M M1M", cli1, c1);
 		Address a2 = new Address(null, "234", "Finch Ave", "0", "M2M M1M", cli1, c1);
 		
 		cli1.getAdress().addAll(Arrays.asList(a1,a2));
+		cli2.getAdress().addAll(Arrays.asList(a2));
 		
-		clientRepository.saveAll(Arrays.asList(cli1));
+		clientRepository.saveAll(Arrays.asList(cli1, cli2));
 		
 		addrRepository.saveAll(Arrays.asList(a1, a2));
 		

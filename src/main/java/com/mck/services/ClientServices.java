@@ -19,11 +19,13 @@ import com.mck.domain.Address;
 import com.mck.domain.City;
 import com.mck.domain.Client;
 import com.mck.domain.enums.ClientType;
-
+import com.mck.domain.enums.UserProfile;
 import com.mck.dto.ClientDTO;
 import com.mck.dto.ClientNewDTO;
 import com.mck.repositories.AddressRepository;
 import com.mck.repositories.ClientRepository;
+import com.mck.security.UserSS;
+import com.mck.services.exceptions.AuthorizationException;
 import com.mck.services.exceptions.DataIntegrityException;
 import com.mck.services.exceptions.ObjectNotFoundException;
 
@@ -40,6 +42,11 @@ public class ClientServices {
 	private BCryptPasswordEncoder bp;
 	
 	public Client find(Integer id) {
+		
+		UserSS user = UserService.authenticated();
+		if(user == null || !user.hasRole(UserProfile.ADMIN) && !id.equals(user.getId())) {
+			throw new AuthorizationException("Access denied");
+		}
 		Optional<Client> obj = repo.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException(
 				"Object not found. Id : " + id + ", Type: " + Client.class.getName()));

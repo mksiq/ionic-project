@@ -5,9 +5,13 @@ import java.util.Optional;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.mck.domain.Client;
 import com.mck.domain.Invoice;
 import com.mck.domain.ItemInvoice;
 import com.mck.domain.PaymentSlip;
@@ -15,7 +19,8 @@ import com.mck.domain.enums.PaymentStatus;
 import com.mck.repositories.InvoiceRepository;
 import com.mck.repositories.ItemInvoiceRepository;
 import com.mck.repositories.PaymentRepository;
-
+import com.mck.security.UserSS;
+import com.mck.services.exceptions.AuthorizationException;
 import com.mck.services.exceptions.ObjectNotFoundException;
 
 @Service
@@ -73,6 +78,18 @@ public class InvoiceServices {
 		return obj;
 	}
 	
+	public Page<Invoice> findPage(Integer page, Integer linesPerPage, String orderBy, String direction){
+		UserSS user = UserService.authenticated();
+		if (user == null) {
+			throw new AuthorizationException("Access denied");
+		}
+		
+		
+		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
+		Client client = clientServices.find(user.getId());
+		
+		return repo.findByClient(client, pageRequest);
+	}
 	//@Transactional
 	//public void insert
 	
@@ -80,7 +97,7 @@ public class InvoiceServices {
 	
 	
 	
-
+	//PageRequest.of and ClientService (Not CliRep)
 
 	
 }

@@ -17,9 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.mck.domain.Category;
 import com.mck.domain.Invoice;
-import com.mck.dto.CategoryDTO;
 import com.mck.services.InvoiceServices;
 
 

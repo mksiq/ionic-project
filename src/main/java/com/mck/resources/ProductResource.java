@@ -15,13 +15,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.mck.domain.Category;
-import com.mck.domain.Invoice;
 import com.mck.domain.Product;
-import com.mck.dto.CategoryDTO;
 import com.mck.dto.ProductDTO;
 import com.mck.resources.util.URLutil;
-import com.mck.services.InvoiceServices;
 import com.mck.services.ProductServices;
 
 

@@ -9,7 +9,6 @@ import org.springframework.context.annotation.Profile;
 
 import com.mck.services.DBservice;
 import com.mck.services.EmailService;
-import com.mck.services.MockMailService;
 import com.mck.services.SmtpEmailService;
 
 @Configuration

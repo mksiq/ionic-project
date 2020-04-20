@@ -1,7 +1,6 @@
 package com.mck.dto;
 
 import java.io.Serializable;
-import java.io.Serializable;
 
 public class CredentialsDTO implements Serializable {
 	private static final long serialVersionUID = 1L;

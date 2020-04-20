@@ -1,12 +1,12 @@
 package com.mck.services;
 
+import java.awt.image.BufferedImage;
 import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
-
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -17,7 +17,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.mck.domain.Address;
-
 import com.mck.domain.City;
 import com.mck.domain.Client;
 import com.mck.domain.enums.ClientType;
@@ -45,6 +44,15 @@ public class ClientServices {
 	
 	@Autowired
 	private BCryptPasswordEncoder bp;
+	
+	@Autowired
+	private ImageService imageService;
+	
+	@Value("${img.prefix.client.profile}")
+	private String prefix;
+	
+	@Value("${img.profile.size}")
+	private Integer size = 200;
 	
 	public Client find(Integer id) {
 		
@@ -125,7 +133,21 @@ public class ClientServices {
 	}
 
 	public URI uploadProfilePicture(MultipartFile multipartFile) {
-		return s3Service.uploadFile(multipartFile);
+		UserSS user = UserService.authenticated();
+		if (user == null) {
+			throw new AuthorizationException("Access denied");
+		}
+		
+		BufferedImage jpgImage = imageService.getJpgImageFromFile(multipartFile);        
+//		jpgImage = imageService.cropSquare(jpgImage);
+		jpgImage = imageService.resize(jpgImage, size);
+		String fileName = prefix + user.getId() +".jpg";
+		return s3Service.uploadFile(imageService.getInputStream(jpgImage, "jpg"), fileName, "image");
+//		URI uri = s3Service.uploadFile(multipartFile);
+//		Client cli = find(user.getId());
+//		cli.setImageUrl(uri.toString());
+//		repo.save(cli);
+//		return s3Service.uploadFile(multipartFile);
 	}
 	
 }

@@ -8,9 +8,8 @@ import org.hibernate.validator.constraints.Length;
 
 import com.mck.domain.Category;
 
-import com.mck.services.validation.ClientUpdate;
 
-@ClientUpdate
+
 public class CategoryDTO  implements Serializable{
 	
 

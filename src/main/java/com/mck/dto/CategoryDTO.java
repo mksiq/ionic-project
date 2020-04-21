@@ -13,9 +13,7 @@ import com.mck.services.validation.ClientUpdate;
 @ClientUpdate
 public class CategoryDTO  implements Serializable{
 	
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 1L;
 	private Integer id;
 	

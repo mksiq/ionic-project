@@ -105,6 +105,20 @@ public class ClientServices {
 		
 		return repo.findAll();
 	}
+	
+	public Client findByEmail(String email) {
+		UserSS user = UserService.authenticated();
+		if(user == null || user.hasRole(UserProfile.ADMIN) && !email.equals(user.getUsername())) {
+			throw new AuthorizationException("Access denied");
+		}
+		
+		Client obj = find(user.getId());
+		
+		if(obj == null) {
+			throw new ObjectNotFoundException("Object not found. Id " + user.getId() + ", type: " + Client.class.getName());
+		}
+		return obj;
+	}
 
 	public Page<Client> findPage(Integer page, Integer linesPerPage, String orderBy, String direction){
 		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
@@ -149,5 +163,7 @@ public class ClientServices {
 //		repo.save(cli);
 //		return s3Service.uploadFile(multipartFile);
 	}
+	
+	
 	
 }

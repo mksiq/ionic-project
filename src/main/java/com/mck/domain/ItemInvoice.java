@@ -34,6 +34,7 @@ public class ItemInvoice implements Serializable{
 		this.quantity = quantity;
 		this.price = price;
 	}
+	
 
 	public ItemInvoicePK getId() {
 		return id;
@@ -67,9 +68,7 @@ public class ItemInvoice implements Serializable{
 		this.price = price;
 	}
 	
-	public double getSubTotal() {
-		
-		
+	public double getSubTotal() {		
 		return (price - discount) * quantity;
 	}
 	
@@ -90,6 +89,8 @@ public class ItemInvoice implements Serializable{
 	public void setProduct(Product product) {
 		id.setProduct(product);
 	}
+	
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;

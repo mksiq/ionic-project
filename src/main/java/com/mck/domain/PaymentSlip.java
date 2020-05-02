@@ -37,9 +37,4 @@ public class PaymentSlip extends Payment implements Serializable {
 	public void setPaymentDate(Date paymentDate) {
 		this.paymentDate = paymentDate;
 	}
-
-	
-	
-	
-	
 }

@@ -11,23 +11,22 @@ import org.springframework.context.annotation.Profile;
 import com.mck.services.DBservice;
 import com.mck.services.EmailService;
 import com.mck.services.MockMailService;
-import com.mck.services.SmtpEmailService;
 
 @Configuration
-@Profile("dev")
-public class DevConfig {
+@Profile("prod")
+public class ProdConfig {
 	
 	@Autowired
 	private DBservice dbService;
 	
-//	@Value("${spring.jpa.hibernate.ddl-auto=create}")
-//	private String strategy;
+	@Value("${spring.jpa.hibernate.ddl-auto=create}")
+	private String strategy;
 	
 	@Bean
 	public boolean instantiateDatabase() throws ParseException {
-//		if(!"create".equals(strategy)) {
-//			return false;
-//		}
+		if(!"create".equals(strategy)) {
+			return false;
+		}
 		dbService.instantiateDatabase();		
 		return true;
 	}

@@ -23,11 +23,11 @@ public abstract class AbstractEmailService implements EmailService{
 	@Value("${default.sender}")
 	private String sender;
 	
-	@Autowired
-	private TemplateEngine template;
-	
-	@Autowired
-	private JavaMailSender javaMailSender;
+//	@Autowired
+//	private TemplateEngine template;
+//	
+//	@Autowired
+//	private JavaMailSender javaMailSender;
 	
 	@Override
 	public void sendOrderConfirmationEmail(Invoice obj) {
@@ -46,37 +46,37 @@ public abstract class AbstractEmailService implements EmailService{
 		return sm;
 	}
 	
-	protected String htmlFromTemplateInvoice(Invoice obj) {
-		Context context = new Context();
-		context.setVariable("invoice", obj);
-		return template.process("email/invoiceConfirmation", context);
-	}
+//	protected String htmlFromTemplateInvoice(Invoice obj) {
+//		Context context = new Context();
+//		context.setVariable("invoice", obj);
+//		return template.process("email/invoiceConfirmation", context);
+//	}
 	
-	@Override
-	public void sendOrderConfirmationHtmlEmail(Invoice obj) {
-		
-		try {
-			MimeMessage mm;
-			mm = prepareMimeMessageFromInvoice(obj);
-			sendHtmlEmail(mm);
-		} catch (MessagingException e) {
-			sendOrderConfirmationEmail(obj);
-		}
-		
-	}
+//	@Override
+//	public void sendOrderConfirmationHtmlEmail(Invoice obj) {
+//		
+//		try {
+//			MimeMessage mm;
+//			mm = prepareMimeMessageFromInvoice(obj);
+//			sendHtmlEmail(mm);
+//		} catch (MessagingException e) {
+//			sendOrderConfirmationEmail(obj);
+//		}
+//		
+//	}
 
-	protected MimeMessage prepareMimeMessageFromInvoice(Invoice obj) throws MessagingException {
-		MimeMessage mm = javaMailSender.createMimeMessage();
-		MimeMessageHelper  mmh = new MimeMessageHelper(mm, true);
-		mmh.setTo(obj.getClient().getEmail());
-		mmh.setFrom(sender);
-		mmh.setSubject("Invoice confirmed! Code: "+ obj.getId());
-		mmh.setSentDate(new Date(System.currentTimeMillis()));
-		mmh.setText(htmlFromTemplateInvoice(obj), true);		
-		
-		
-		return mm;
-	}
+//	protected MimeMessage prepareMimeMessageFromInvoice(Invoice obj) throws MessagingException {
+//		MimeMessage mm = javaMailSender.createMimeMessage();
+//		MimeMessageHelper  mmh = new MimeMessageHelper(mm, true);
+//		mmh.setTo(obj.getClient().getEmail());
+//		mmh.setFrom(sender);
+//		mmh.setSubject("Invoice confirmed! Code: "+ obj.getId());
+//		mmh.setSentDate(new Date(System.currentTimeMillis()));
+//		mmh.setText(htmlFromTemplateInvoice(obj), true);		
+//		
+//		
+//		return mm;
+//	}
 	
 	@Override
 	public void sendNewPasswordEmail(Client client, String newPass) {

@@ -17,7 +17,7 @@ import com.mck.services.AuthService;
 import com.mck.services.UserService;
 
 @RestController
-@RequestMapping(value="/value")
+@RequestMapping(value="/auth")
 public class AuthResource {
 	@Autowired
 	private JWTUtil jwtUtil;

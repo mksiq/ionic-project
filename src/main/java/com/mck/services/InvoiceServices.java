@@ -74,7 +74,8 @@ public class InvoiceServices {
 			item.setInvoice(obj);
 		}
 		itemInvoiceRepository.saveAll(obj.getItems());
-		emailService.sendOrderConfirmationHtmlEmail(obj);
+		//emailService.sendOrderConfirmationHtmlEmail(obj);
+		emailService.sendOrderConfirmationEmail(obj);
 		return obj;
 	}
 	

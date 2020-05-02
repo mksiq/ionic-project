@@ -6,6 +6,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.mail.SimpleMailMessage;
 
+import com.mck.domain.Invoice;
+
 
 
 public class MockMailService extends AbstractEmailService {
@@ -24,6 +26,12 @@ public class MockMailService extends AbstractEmailService {
 		LOG.info("Simulating sending an HTML email...");
 		LOG.info(msg.toString());
 		LOG.info("Html email sent");
+	}
+
+	@Override
+	public void sendOrderConfirmationHtmlEmail(Invoice obj) {
+		// TODO Auto-generated method stub
+		
 	}
 
 	
